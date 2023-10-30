@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Site Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Add your custom CSS and JavaScript links here -->
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Blogs</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link {% block homeactive %}{% endblock %}" href="/">Home</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link {% block add_blogs_active %}{% endblock %}" href="/add_blogs/">Add Blogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Hello {{request.user}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block profileactive %}{% endblock %}" href="/profile/">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout/">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link {% block registeractive %}{% endblock %}" href="/register/">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block loginactive %}{% endblock %}" href="/login/">Login</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Categories
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                                {% for category in categories %}
+                                <a class="dropdown-item" href="{% url 'categories' category.id %}">{{ category.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+                    
+                    
+                    {% endif %}
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+</body>
+</html>
