@@ -1,0 +1,14 @@
+{% autoescape off %}
+Hi {{ user.username }},
+
+Please click on the link below to activate your account:
+
+{{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+If the link above doesn't work, you can copy and paste the URL below into your web browser:
+
+{{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+Thanks!
+The MyBlog Team
+{% endautoescape %}
